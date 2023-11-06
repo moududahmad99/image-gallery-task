@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import { RiGalleryLine } from 'react-icons/ri'
 
 function App() {
@@ -20,7 +24,7 @@ function App() {
     { id: 10, selected: false }
 
   ]);
-
+ 
   // Start Dragging
   const handleDragStart = (e, id) => {
     e.dataTransfer.setData('text/plain', id);
@@ -67,7 +71,13 @@ function App() {
   const deleteSelectedImages = () => {
     const updatedImages = GalleryDragImages.filter((image) => !image.selected);
     setGalleryDragImages(updatedImages);
-  }
+
+    toast.success('Images deleted successfully', {
+      position: 'top-right',
+      autoClose: 3000,
+    });
+  };
+
 
   // Counting the number of selected Image
   const countSelectedImages = () => {
@@ -78,6 +88,7 @@ function App() {
   return (
     <div className="App bg-[#F5F7F8] py-10">
       <div className="container mx-auto">
+        <ToastContainer />
 
         <div className="imageGalleryWrapper p-8 bg-[#FFFFFF]">
 
@@ -119,7 +130,6 @@ function App() {
                     onChange={() => handleImageSelect(image.id)}
                   />
                 </div>
-
               </div>
             ))}
           </div>
